@@ -29,5 +29,5 @@ tensorboard-plugin-wit==1.8.1
 # torchvision==0.13.1+cu113
 typing-extensions==4.3.0
 urllib3==1.26.12
-Werkzeug==2.2.2
+Werkzeug==2.3.8
 zipp==3.8.1
