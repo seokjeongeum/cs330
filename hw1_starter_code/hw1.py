@@ -46,7 +46,16 @@ class MANN(nn.Module):
         """
         #############################
         #### YOUR CODE GOES HERE ####
-        pass
+        predictions = torch.clone(input_labels)
+        labels = torch.clone(input_labels)
+        n = input_images.shape[0]
+        labels[:, -1] = torch.zeros((n, self.num_classes, self.num_classes))
+        predictions[-1] = self.layer2(
+            self.layer1(
+                torch.cat([input_images, labels], 3).type(torch.float32).reshape(n, -1, self.num_classes + 784)
+            )[0]
+        )[0][-1].reshape(self.samples_per_class, self.num_classes, self.num_classes)
+        return predictions
         #############################
 
     def loss_function(self, preds, labels):
@@ -62,7 +71,7 @@ class MANN(nn.Module):
         """
         #############################
         #### YOUR CODE GOES HERE ####
-        pass
+        return F.cross_entropy(preds[:, -1], labels[:, -1])
         #############################
 
 
