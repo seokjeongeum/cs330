@@ -39,13 +39,13 @@ class DataGenerator(IterableDataset):
     """
 
     def __init__(
-        self,
-        num_classes,
-        num_samples_per_class,
-        batch_type,
-        config={},
-        device=torch.device("cpu"),
-        cache=True,
+            self,
+            num_classes,
+            num_samples_per_class,
+            batch_type,
+            config={},
+            device=torch.device("cpu"),
+            cache=True,
     ):
         """
         Args:
@@ -76,8 +76,8 @@ class DataGenerator(IterableDataset):
         num_val = 100
         num_train = 1100
         self.metatrain_character_folders = character_folders[:num_train]
-        self.metaval_character_folders = character_folders[num_train : num_train + num_val]
-        self.metatest_character_folders = character_folders[num_train + num_val :]
+        self.metaval_character_folders = character_folders[num_train: num_train + num_val]
+        self.metatest_character_folders = character_folders[num_train + num_val:]
         self.device = device
         self.image_caching = cache
         self.stored_images = {}
@@ -134,7 +134,33 @@ class DataGenerator(IterableDataset):
 
         #############################
         #### YOUR CODE GOES HERE ####
-        pass
+        characters = sorted(
+            get_images(
+                random.sample(self.folders, self.num_classes),
+                np.arange(self.num_classes),
+                self.num_samples_per_class,
+            ),
+            key=lambda x: x[0],
+        )
+        image = np.array(
+            [
+                [
+                    self.image_file_to_array(characters[i + j * self.num_samples_per_class][1], self.dim_input) for j in range(self.num_classes)
+                ] for i in range(self.num_samples_per_class)
+            ]
+        )
+        label = np.array(
+            [
+                [
+                    np.eye(1, self.num_classes, characters[i + j * self.num_samples_per_class][0]).reshape(-1) for j in range(self.num_classes)
+                ] for i in range(self.num_samples_per_class)
+            ]
+        )
+        query_shuffle = np.arange(self.num_classes)
+        np.random.shuffle(query_shuffle)
+        image[-1] = image[-1][query_shuffle]
+        label[-1] = label[-1][query_shuffle]
+        return image, label
         #############################
 
     def __iter__(self):
