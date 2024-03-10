@@ -7,29 +7,28 @@ import time
 import imageio
 
 
-def get_images(paths, labels, nb_samples=None, shuffle=True):
+def get_images(paths, labels, num_samples=None):
     """
     Takes a set of character folders and labels and returns paths to image files
     paired with labels.
     Args:
         paths: A list of character folders
         labels: List or numpy array of same length as paths
-        nb_samples: Number of images to retrieve per character
+        num_samples: Number of images to retrieve per character
     Returns:
         List of (label, image_path) tuples
     """
-    if nb_samples is not None:
-        sampler = lambda x: random.sample(x, nb_samples)
+    if num_samples is not None:
+        sampler = lambda x: random.sample(x, num_samples)
     else:
         sampler = lambda x: x
-    images_labels = [
+    labels_and_images = [
         (i, os.path.join(path, image))
         for i, path in zip(labels, paths)
         for image in sampler(os.listdir(path))
     ]
-    if shuffle:
-        random.shuffle(images_labels)
-    return images_labels
+
+    return labels_and_images
 
 
 class DataGenerator(IterableDataset):
@@ -102,7 +101,7 @@ class DataGenerator(IterableDataset):
             return self.stored_images[filename]
         image = imageio.imread(filename)  # misc.imread(filename)
         image = image.reshape([dim_input])
-        image = image.astype(np.float32) / 255.0
+        image = image.astype(np.float32) / image.max()
         image = 1.0 - image
         if self.image_caching:
             self.stored_images[filename] = image
@@ -111,12 +110,10 @@ class DataGenerator(IterableDataset):
     def _sample(self):
         """
         Samples a batch for training, validation, or testing
-        Args:
-            does not take any arguments
         Returns:
             A tuple of (1) Image batch and (2) Label batch:
-                1. image batch has shape [K+1, N, 784] and
-                2. label batch has shape [K+1, N, N]
+                1. image batch has shape [K+1, N, 784] and is a numpy array
+                2. label batch has shape [K+1, N, N] and is a numpy array
             where K is the number of "shots", N is number of classes
         Note:
             1. The numpy functions np.random.shuffle and np.eye (for creating)
@@ -124,44 +121,51 @@ class DataGenerator(IterableDataset):
 
             2. For shuffling, remember to make sure images and labels are shuffled
             in the same order, otherwise the one-to-one mapping between images
-            and labels may get messed up. Hint: there is a clever way to use
+            and labels may get messed up. Hint: we encourage you to use
             np.random.shuffle here.
-            
-            3. The value for `self.num_samples_per_class` will be set to K+1 
-            since for K-shot classification you need to sample K supports and 
+
+            3. The value for `self.num_samples_per_class` will be set to K+1
+            since for K-shot classification you need to sample K supports and
             1 query.
+
+            4. PyTorch uses float32 as default for representing model parameters.
+            You would need to return numpy arrays with the same datatype
         """
 
         #############################
-        #### YOUR CODE GOES HERE ####
-        characters = sorted(
-            get_images(
-                random.sample(self.folders, self.num_classes),
-                np.arange(self.num_classes),
-                self.num_samples_per_class,
-            ),
-            key=lambda x: x[0],
+        ### START CODE HERE ###
+        # Step 1: Sample N (self.num_classes in our case) different characters folders
+        samples = random.sample(self.folders, self.num_classes)
+        # Step 2: Sample and load K + 1 (self.self.num_samples_per_class in our case) images per character together with their labels preserving the order!
+        # Use our get_images function defined above.
+        # You should be able to complete this with only one call of get_images(...)!
+        # Please closely check the input arguments of get_images to understand how it works.
+        characters = get_images(
+            samples,
+            np.arange(self.num_classes),
+            self.num_samples_per_class,
         )
+        # Step 3: Iterate over the sampled files and create the image and label batches
+
+        # Make sure that we have a fixed order as pictured in the assignment writeup
+        # Use our image_file_to_array function defined above.
         image = np.array(
             [
                 [
                     self.image_file_to_array(characters[i + j * self.num_samples_per_class][1], self.dim_input) for j in range(self.num_classes)
                 ] for i in range(self.num_samples_per_class)
             ]
-        )
-        label = np.array(
-            [
-                [
-                    np.eye(1, self.num_classes, characters[i + j * self.num_samples_per_class][0]).reshape(-1) for j in range(self.num_classes)
-                ] for i in range(self.num_samples_per_class)
-            ]
-        )
+        ).astype(np.float32)
+        label = np.tile(np.eye(self.num_classes), (self.num_samples_per_class, 1, 1)).astype(np.float32)
+        # Step 4: Shuffle the order of examples from the query set
         query_shuffle = np.arange(self.num_classes)
         np.random.shuffle(query_shuffle)
         image[-1] = image[-1][query_shuffle]
         label[-1] = label[-1][query_shuffle]
+        # Step 5: return tuple of image batch with shape [K+1, N, 784] and
+        #         label batch with shape [K+1, N, N]
         return image, label
-        #############################
+        ### END CODE HERE ###
 
     def __iter__(self):
         while True:

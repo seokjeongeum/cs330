@@ -45,18 +45,17 @@ class MANN(nn.Module):
             [B, K+1, N, N] predictions
         """
         #############################
-        #### YOUR CODE GOES HERE ####
-        predictions = torch.clone(input_labels)
-        labels = torch.clone(input_labels)
-        n = input_images.shape[0]
-        labels[:, -1] = torch.zeros((n, self.num_classes, self.num_classes))
-        predictions[-1] = self.layer2(
-            self.layer1(
-                torch.cat([input_images, labels], 3).type(torch.float32).reshape(n, -1, self.num_classes + 784)
-            )[0]
-        )[0][-1].reshape(self.samples_per_class, self.num_classes, self.num_classes)
-        return predictions
-        #############################
+        ### START CODE HERE ###
+        b = input_images.shape[0]
+        # Step 1: Concatenate the full (support & query) set of labels and images
+        input = torch.cat([input_images, input_labels], 3)
+        # Step 2: Zero out the labels from the concatenated corresponding to the query set
+        input[:, -1, :, -3:] = torch.zeros_like(input[:, -1, :, -3:])
+        # Step 3: Pass the concatenated set sequentially to the memory-augmented network
+        predictions, _ = self.layer2(self.layer1(input.reshape(b, self.samples_per_class * self.num_classes, self.num_classes + 784))[0])
+        # Step 3: Return the predictions with [B, K+1, N, N] shape
+        return predictions.reshape(b, self.samples_per_class, self.num_classes, self.num_classes)
+        ### END CODE HERE ###
 
     def loss_function(self, preds, labels):
         """
@@ -65,14 +64,24 @@ class MANN(nn.Module):
             preds: [B, K+1, N, N] network output
             labels: [B, K+1, N, N] labels
         Returns:
-            scalar loss
+            !!!scalar loss!!!
         Note:
             Loss should only be calculated on the N test images
+            Loss should be a scalar since mean reduction is used for cross entropy loss
+            You would want to use F.cross_entropy here, specifically:
+            with predicted unnormalized logits as input and ground truth class indices as target.
+            Your logits would be of shape [B*N, N], and label indices would be of shape [B*N].
         """
         #############################
-        #### YOUR CODE GOES HERE ####
-        return F.cross_entropy(preds[:, -1], labels[:, -1])
-        #############################
+        ### START CODE HERE ###
+        # Step 1: extract the predictions for the query set
+        preds = preds[:, -1]
+        # Step 2: extract the true labels for the query set and reverse the one hot-encoding
+        labels = labels[:, -1].argmax(axis=1)
+        # Step 3: compute the Cross Entropy Loss for the query set only!
+        b = preds.shape[0]
+        return F.cross_entropy(preds.reshape(b * self.num_classes, self.num_classes), labels.reshape(b * self.num_classes))
+        ### END CODE HERE ###
 
 
 def train_step(images, labels, model, optim, eval=False):
@@ -186,8 +195,8 @@ def main(config):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--num_classes", type=int, default=5)
-    parser.add_argument("--num_shot", type=int, default=1)
+    parser.add_argument("--num_classes", type=int, default=3)
+    parser.add_argument("--num_shot", type=int, default=2)
     parser.add_argument("--num_workers", type=int, default=4)
     parser.add_argument("--eval_freq", type=int, default=100)
     parser.add_argument("--meta_batch_size", type=int, default=128)
