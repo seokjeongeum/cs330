@@ -128,33 +128,38 @@ You should start with the case $K=1 , N=2$ as it can aid you in the implementati
 
 
 For each configuration, submit a plot of the meta-test query set classification accuracy over training iterations (A TensorBoard screenshot is fine). Answer the following questions:
-
-\textcolor{red}{Your plot goes here.}
-
+\\
+\includegraphics[width=\linewidth]{figures/problem3.png}
 \begin{enumerate}
     \item How does increasing the number of classes affect learning and performance?
     
-    \textcolor{red}{Your answer goes here.}
+    \textcolor{red}{Increasing the number of classes makes learning harder and perfomance worse.}
     
     \item How does increasing the number of examples in the support set affect performance?
     
-   \textcolor{red}{Your answer goes here.}
+   \textcolor{red}{Increasing the number of examples did not affect a lot on peformance.}
     
 \end{enumerate}
 
 \section*{Problem 4: Experimentation}
 \begin{enumerate}[label=\alph*]
-    \item Experiment with one hyperparameter that affects the performance of the model, such as the type of recurrent layer, size of hidden state, learning rate, or number of layers.  Submit a plot that shows how the meta-test query set classification accuracy of the model changes on 1-shot, 3-way classification as you change the parameter. Provide a brief rationale for why you chose the parameter and what you observed in the caption for the plot.
-    
-    \textcolor{red}{Your plot and answer goes here.}
+    \item Experiment with one hyperparameter that affects the performance of the model, such as the type of recurrent layer, size of hidden state, learning rate, or number of layers.  Submit a plot that shows how the meta-test query set classification accuracy of the model changes on 1-shot, 3-way classification as you change the parameter. Provide a brief rationale for why you chose the parameter and what you observed in the caption for the plot.\\    
+    \textcolor{red}{I chose size of hidden state because this parameter is present on log directory.}
     
     
     \item \textbf{Extra Credit:} In this question we'll explore the effect of memory representation on model performance. We will focus on the $K=1$, $N=3$ case.
     
     In the previous experiments we used an LSTM model with 128 units. Consider additional memory sizes of 256, and 8. How does increasing and decreasing the memory capacity influence performance?
     
-    \textcolor{red}{Your plot and answer goes here.}
+    \textcolor{red}{Performance increases as size of hidden state grows.}
     
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{figures/problem4.png}
+%\vspace{-9mm}
+\caption{Performance increases as size of hidden state grows.}
+%\label{mann}
+\end{figure}
 \end{enumerate}
 
 %\begin{figure}
