@@ -1,6 +1,6 @@
 """Dataloading for Omniglot."""
-import os
 import glob
+import os
 
 import google_drive_downloader as gdd
 import imageio
@@ -51,7 +51,6 @@ class OmniglotDataset(dataset.Dataset):
         """
         super().__init__()
 
-
         # if necessary, download the Omniglot dataset
         if not os.path.isdir(self._BASE_PATH):
             gdd.GoogleDriveDownloader.download_file_from_google_drive(
@@ -64,7 +63,7 @@ class OmniglotDataset(dataset.Dataset):
         self._character_folders = glob.glob(
             os.path.join(self._BASE_PATH, '*/*/'))
         assert len(self._character_folders) == (
-            NUM_TRAIN_CLASSES + NUM_VAL_CLASSES + NUM_TEST_CLASSES
+                NUM_TRAIN_CLASSES + NUM_VAL_CLASSES + NUM_TEST_CLASSES
         )
 
         # shuffle characters
