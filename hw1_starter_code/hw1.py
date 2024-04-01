@@ -59,7 +59,7 @@ class MANN(nn.Module):
 
     def loss_function(self, preds, labels):
         """
-        Computes MANN loss
+        Computes MA.aNN loss
         Args:
             preds: [B, K+1, N, N] network output
             labels: [B, K+1, N, N] labels

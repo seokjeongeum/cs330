@@ -126,7 +126,25 @@ class ProtoNet:
             # Use util.score to compute accuracies.
             # Make sure to populate loss_batch, accuracy_support_batch, and
             # accuracy_query_batch.
-
+            support = self._network.forward(images_support)
+            prototypes = []
+            for i in torch.unique(labels_support):
+                prototypes.append(support[labels_support == i].mean(axis=0))
+            query = self._network.forward(images_query)
+            stack = torch.stack(prototypes)
+            logits_query = F.softmax(
+                -torch.linalg.norm(query.reshape(query.shape[0], 1, query.shape[1]) - stack, 2, 2),
+                1,
+            )
+            loss_batch.append(F.cross_entropy(logits_query, labels_query))
+            accuracy_support_batch.append(util.score(
+                F.softmax(
+                    -torch.linalg.norm(support.reshape(support.shape[0], 1, support.shape[1]) - stack, 2, 2),
+                    1,
+                ),
+                labels_support,
+            ))
+            accuracy_query_batch.append(util.score(logits_query, labels_query))
             # ********************************************************
             # ******************* YOUR CODE HERE *********************
             # ********************************************************
@@ -270,7 +288,7 @@ class ProtoNet:
 def main(args):
     log_dir = args.log_dir
     if log_dir is None:
-        log_dir = f'./logs/protonet/omniglot.way:{args.num_way}.support:{args.num_support}.query:{args.num_query}.lr:{args.learning_rate}.batch_size:{args.batch_size}'  # pylint: disable=line-too-long
+        log_dir = f'./logs/protonet/omniglot.way_{args.num_way}.support_{args.num_support}.query_{args.num_query}.lr_{args.learning_rate}.batch_size_{args.batch_size}'  # pylint: disable=line-too-long
     print(f'log_dir: {log_dir}')
     writer = tensorboard.SummaryWriter(log_dir=log_dir)
 
@@ -335,13 +353,13 @@ if __name__ == '__main__':
                         help='directory to save to or load from')
     parser.add_argument('--num_way', type=int, default=5,
                         help='number of classes in a task')
-    parser.add_argument('--num_support', type=int, default=1,
+    parser.add_argument('--num_support', type=int, default=5,
                         help='number of support examples per class in a task')
     parser.add_argument('--num_query', type=int, default=15,
                         help='number of query examples per class in a task')
     parser.add_argument('--learning_rate', type=float, default=0.001,
                         help='learning rate for the network')
-    parser.add_argument('--batch_size', type=int, default=16,
+    parser.add_argument('--batch_size', type=int, default=96,
                         help='number of tasks per outer-loop update')
     parser.add_argument('--num_train_iterations', type=int, default=5000,
                         help='number of outer-loop updates to train for')
