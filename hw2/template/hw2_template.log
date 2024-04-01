@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.3.29)  29 MAR 2024 15:43
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.3.29)  2 APR 2024 08:45
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -356,20 +356,27 @@ Overfull \hbox (38.11958pt too wide) in paragraph at lines 158--159
 m/n/12 .pt\OT1/qpl/m/n/12 ,
  []
 
-[5] [6] [7] [8]
+[5]
+<figures/validation_query_accuracy.png, id=37, 385.44pt x 249.18094pt>
+File: figures/validation_query_accuracy.png Graphic file (type png)
+<use figures/validation_query_accuracy.png>
+Package pdftex.def Info: figures/validation_query_accuracy.png  used on input l
+ine 171.
+(pdftex.def)             Requested size: 469.75502pt x 303.68849pt.
+ [6 <./figures/validation_query_accuracy.png>] [7] [8]
 
-LaTeX Warning: Citation `maml' on page 9 undefined on input line 215.
+LaTeX Warning: Citation `maml' on page 9 undefined on input line 225.
 
-<figures/MAML.png, id=47, 1375.1375pt x 480.79625pt>
+<figures/MAML.png, id=49, 1375.1375pt x 480.79625pt>
 File: figures/MAML.png Graphic file (type png)
 <use figures/MAML.png>
-Package pdftex.def Info: figures/MAML.png  used on input line 221.
+Package pdftex.def Info: figures/MAML.png  used on input line 231.
 (pdftex.def)             Requested size: 375.80544pt x 131.39403pt.
 
-LaTeX Warning: Citation `mamlplusplus' on page 9 undefined on input line 249.
+LaTeX Warning: Citation `mamlplusplus' on page 9 undefined on input line 259.
 
 [9 <./figures/MAML.png>] [10] [11] [12] [13] [14] [15]
-Overfull \hbox (5.61757pt too wide) in paragraph at lines 340--342
+Overfull \hbox (5.61757pt too wide) in paragraph at lines 350--352
 []\OT1/qpl/m/n/12 Use the pro-tonet trained with 5-way 1-shot tasks, and the MA
 ML trained with \OT1/qpl/b/n/12 learned
  []
@@ -390,13 +397,13 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 4610 strings out of 474104
- 68883 string characters out of 5747502
+ 4617 strings out of 474104
+ 69190 string characters out of 5747502
  1934496 words of memory out of 5000000
- 26912 multiletter control sequences out of 15000+600000
+ 26919 multiletter control sequences out of 15000+600000
  592464 words of font info for 68 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 57i,8n,65p,774b,295s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 57i,8n,65p,774b,464s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/tex
 live/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2024
 /texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><c:/texlive/2024/texmf-dis
@@ -411,10 +418,10 @@ exmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb><c:/texlive/2024/texmf-dist
 ts/type1/public/tex-gyre/qplb.pfb><c:/texlive/2024/texmf-dist/fonts/type1/publi
 c/tex-gyre/qplr.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/tex-gyre/qpl
 ri.pfb>
-Output written on hw2_template.pdf (17 pages, 634601 bytes).
+Output written on hw2_template.pdf (17 pages, 648678 bytes).
 PDF statistics:
- 144 PDF objects out of 1000 (max. 8388607)
+ 146 PDF objects out of 1000 (max. 8388607)
  89 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 11 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 16 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -120,7 +120,6 @@ class ProtoNet:
             # ********************************************************
             # ******************* YOUR CODE HERE *********************
             # ********************************************************
-            # TODO: finish implementing this method.
             # For a given task, compute the prototypes and the protonet loss.
             # Use F.cross_entropy to compute classification losses.
             # Use util.score to compute accuracies.
@@ -353,7 +352,7 @@ if __name__ == '__main__':
                         help='directory to save to or load from')
     parser.add_argument('--num_way', type=int, default=5,
                         help='number of classes in a task')
-    parser.add_argument('--num_support', type=int, default=5,
+    parser.add_argument('--num_support', type=int, default=1,
                         help='number of support examples per class in a task')
     parser.add_argument('--num_query', type=int, default=15,
                         help='number of query examples per class in a task')

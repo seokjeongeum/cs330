@@ -166,7 +166,13 @@ As is standard for stochastic gradient methods, we approximate the objective~\eq
         \item (20 pt) Submit a plot of the validation query accuracy over the course of training. \\
         \textbf{Hint}: you should obtain a query accuracy on the validation split of at least $99\%$.
         
-        \textcolor{red}{Your plot goes here.}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{figures/validation_query_accuracy.png}
+%\vspace{-3mm}
+%\caption{Prototypical networks in a nutshell. In a 3-way 5-shot classification task, the class prototypes $c_1, c_2, c_3$ are computed from each class's support features (colored circles). The prototypes define decision boundaries based on Euclidean distance. A query example $x$ is determined to be class 2 since its features (white circle) lie within that class's decision region.}
+%\label{fig:protonet}
+\end{figure}
         
     \end{enumerate}
     
@@ -175,12 +181,12 @@ As is standard for stochastic gradient methods, we approximate the objective~\eq
     \begin{enumerate}[label=(\alph*)]
         \item (5 pt) Is the model placing support examples of the same class close together in feature space or not? Support your answer by referring to specific accuracy metrics.
         
-        \textcolor{red}{Your answer goes here.}
+        \textcolor{red}{Model is placing support examples of the same class close together in feature space according to train support accuracy.}
 
         
         \item (5 pt) Is the model generalizing to new tasks? If not, is it overfitting or underfitting? Support your answer by referring to specific accuracy metrics.
         
-        \textcolor{red}{Your answer goes here.}
+        \textcolor{red}{Model is generalizing to new tasks according to validation query accuracy.}
 
     \end{enumerate}
     
@@ -193,15 +199,19 @@ As is standard for stochastic gradient methods, we approximate the objective~\eq
         \end{equation*}
     appropriately specifying \texttt{log\_dir} and \texttt{checkpoint\_step}. Submit a table of your results with 95\% confidence intervals.
         
-        \textcolor{red}{Your table goes here.}
+\begin{tabular}{r|cc}
+train                              &5-way 1-shot&5-way 5-shot\\\hline
+mean                            &0.986            &0.987            \\ 
+95\% confidence interval&0.002            &0.002            \\
+\end{tabular}
         
         \item (2 pt) How did you choose which checkpoint to use for testing for each model? 
         
-        \textcolor{red}{Your answer goes here.}
+        \textcolor{red}{I chose the latest checkpoint because that will be the most fitted one.}
         
         \item (5 pt) Is there a significant difference in the test performance on 5-way 1-shot tasks? Explain this by referring to the protonets algorithm.
         
-        \textcolor{red}{Your answer goes here.}
+        \textcolor{red}{No, computing the prototype is almost the same as choosing one datapoint.}
 
     \end{enumerate}
     
