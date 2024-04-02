@@ -5,9 +5,9 @@ import os
 
 import numpy as np
 import torch
-from torch import nn
 import torch.nn.functional as F
 from torch import autograd
+from torch import nn
 from torch.utils import tensorboard
 
 import omniglot
@@ -172,14 +172,25 @@ class MAML:
         # ********************************************************
         # ******************* YOUR CODE HERE *********************
         # ********************************************************
-        # TODO: finish implementing this method.
         # This method computes the inner loop (adaptation) procedure
         # over the course of _num_inner_steps steps for one
         # task. It also scores the model along the way.
         # Make sure to populate accuracies and update parameters.
         # Use F.cross_entropy to compute classification losses.
         # Use util.score to compute accuracies.
-
+        autograd.set_detect_anomaly(True)
+        for _ in range(self._num_inner_steps):
+            logits = self._forward(images, parameters)
+            accuracies.append(util.score(logits, labels))
+            parameters = {
+                k: torch.clone(parameters[k] - self._inner_lrs[k] * v)
+                for k, v in zip(parameters.keys(), autograd.grad(
+                    F.cross_entropy(logits, labels),
+                    list(parameters.values()),
+                    create_graph=train,
+                ))
+            }
+        accuracies.append(util.score(self._forward(images, parameters), labels))
         # ********************************************************
         # ******************* YOUR CODE HERE *********************
         # ********************************************************
@@ -212,7 +223,6 @@ class MAML:
             # ********************************************************
             # ******************* YOUR CODE HERE *********************
             # ********************************************************
-            # TODO: finish implementing this method.
             # For a given task, use the _inner_loop method to adapt for
             # _num_inner_steps steps, then compute the MAML loss and other
             # metrics.
@@ -220,7 +230,11 @@ class MAML:
             # Use util.score to compute accuracies.
             # Make sure to populate outer_loss_batch, accuracies_support_batch,
             # and accuracy_query_batch.
-
+            parameters, accuracies = self._inner_loop(images_support, labels_support, train)
+            logits = self._forward(images_query, parameters)
+            outer_loss_batch.append(F.cross_entropy(logits, labels_query))
+            accuracies_support_batch.append(accuracies)
+            accuracy_query_batch.append(util.score(logits, labels_query))
             # ********************************************************
             # ******************* YOUR CODE HERE *********************
             # ********************************************************
@@ -400,7 +414,7 @@ class MAML:
 def main(args):
     log_dir = args.log_dir
     if log_dir is None:
-        log_dir = f'./logs/maml/omniglot.way:{args.num_way}.support:{args.num_support}.query:{args.num_query}.inner_steps:{args.num_inner_steps}.inner_lr:{args.inner_lr}.learn_inner_lrs:{args.learn_inner_lrs}.outer_lr:{args.outer_lr}.batch_size:{args.batch_size}'  # pylint: disable=line-too-long
+        log_dir = f'./logs/maml/omniglot.way_{args.num_way}.support_{args.num_support}.query_{args.num_query}.inner_steps_{args.num_inner_steps}.inner_lr_{args.inner_lr}.learn_inner_lrs_{args.learn_inner_lrs}.outer_lr_{args.outer_lr}.batch_size_{args.batch_size}'  # pylint: disable=line-too-long
     print(f'log_dir: {log_dir}')
     writer = tensorboard.SummaryWriter(log_dir=log_dir)
 
