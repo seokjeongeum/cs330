@@ -168,10 +168,7 @@ As is standard for stochastic gradient methods, we approximate the objective~\eq
         
 \begin{figure}[H]
 \centering
-\includegraphics[width=\linewidth]{figures/validation_query_accuracy.png}
-%\vspace{-3mm}
-%\caption{Prototypical networks in a nutshell. In a 3-way 5-shot classification task, the class prototypes $c_1, c_2, c_3$ are computed from each class's support features (colored circles). The prototypes define decision boundaries based on Euclidean distance. A query example $x$ is determined to be class 2 since its features (white circle) lie within that class's decision region.}
-%\label{fig:protonet}
+\includegraphics[width=\linewidth]{figures/protonets_validation_query_accuracy.png}
 \end{figure}
         
     \end{enumerate}
@@ -278,7 +275,10 @@ Like before, we will use minibatches to approximate \eqref{eq:full_objective} an
         \item (20 pt) Submit a plot of the validation post-adaptation query accuracy over the course of training. \\
         \textbf{Hint}: you should obtain a query accuracy on the validation split of at least $96\%$.
         
-        \textcolor{red}{Your plot goes here.}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{figures/maml_validation_query_accuracy.png}
+\end{figure}
         
     \end{enumerate}
     
@@ -287,16 +287,16 @@ Like before, we will use minibatches to approximate \eqref{eq:full_objective} an
     \begin{enumerate}[label=(\alph*)]
         \item (10 pt) State and explain the behavior of the \texttt{train\_pre\_adapt\_support} and \texttt{val\_pre\_adapt\_support} accuracies. Your answer should explicitly refer to the task sampling process. \\ \textbf{Hint}: consult the \texttt{omniglot.py} file.
 
-        \textcolor{red}{Your answer goes here.}
+        \textcolor{red}{Pre-adapt accuracies are around 0.2 because tasks are randomly sampled.}
 
     
         \item (5 pt) Compare the \texttt{train\_pre\_adapt\_support} and \texttt{train\_post\_adapt\_support} accuracies. What does this comparison tell you about the model? Repeat for the corresponding \texttt{val} accuracies.
 
-        \textcolor{red}{Your answer goes here.}
+        \textcolor{red}{Adaptation has made the model accurate.}
         
         \item (5 pt) Compare the \texttt{train\_post\_adapt\_support} and \texttt{train\_post\_adapt\_query} accuracies. What does this comparison tell you about the model? Repeat for the corresponding \texttt{val} accuracies.
         
-        \textcolor{red}{Your answer goes here.}
+        \textcolor{red}{The model has achieved the perfect accuracy but did not overfit to data.}
 
     \end{enumerate}
 

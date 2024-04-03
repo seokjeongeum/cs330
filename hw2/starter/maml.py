@@ -492,7 +492,7 @@ if __name__ == '__main__':
                         help='number of query examples per class in a task')
     parser.add_argument('--num_inner_steps', type=int, default=1,
                         help='number of inner-loop updates')
-    parser.add_argument('--inner_lr', type=float, default=0.4,
+    parser.add_argument('--inner_lr', type=float, default=0.04,
                         help='inner-loop learning rate initialization')
     parser.add_argument('--learn_inner_lrs', default=False, action='store_true',
                         help='whether to optimize inner-loop learning rates')
