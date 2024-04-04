@@ -292,11 +292,11 @@ Like before, we will use minibatches to approximate \eqref{eq:full_objective} an
     
         \item (5 pt) Compare the \texttt{train\_pre\_adapt\_support} and \texttt{train\_post\_adapt\_support} accuracies. What does this comparison tell you about the model? Repeat for the corresponding \texttt{val} accuracies.
 
-        \textcolor{red}{Adaptation has made the model accurate.}
+        \textcolor{red}{The model has adapted to the task.}
         
         \item (5 pt) Compare the \texttt{train\_post\_adapt\_support} and \texttt{train\_post\_adapt\_query} accuracies. What does this comparison tell you about the model? Repeat for the corresponding \texttt{val} accuracies.
         
-        \textcolor{red}{The model has achieved the perfect accuracy but did not overfit to data.}
+        \textcolor{red}{The model has adapted to the task but did not overfit to data.}
 
     \end{enumerate}
 
@@ -313,7 +313,7 @@ Like before, we will use minibatches to approximate \eqref{eq:full_objective} an
 
         \item (2 pt) What is the effect of lowering the inner learning rate on (outer-loop) optimization and generalization?
 
-        \textcolor{red}{Lowering the inner learning rate had negative effect on optimization and generalization.}
+        \textcolor{red}{Optimization and generalization failed at one point.}
 
     \end{enumerate}
     
@@ -322,11 +322,14 @@ Like before, we will use minibatches to approximate \eqref{eq:full_objective} an
     \begin{enumerate}[label=(\alph*)]
         \item (3 pt) Submit a plot of the validation post-adaptation query accuracy over the course of training with the two number of inner loop steps ($1$, $5$) with inner learning rate $0.04$.
   
-        \textcolor{red}{Your plot goes here.}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{figures/4a.png}
+\end{figure}
 
         \item (2 pt) What is the effect of increasing the number of inner loop steps on (outer-loop) optimization and generalization?
         
-        \textcolor{red}{Your answer goes here.}
+        \textcolor{red}{Optimization and generalization fail more often but recover faster.}
 
     \end{enumerate}
 
