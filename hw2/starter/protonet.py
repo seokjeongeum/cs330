@@ -5,8 +5,8 @@ import os
 
 import numpy as np
 import torch
-from torch import nn
 import torch.nn.functional as F
+from torch import nn
 from torch.utils import tensorboard
 
 import omniglot
@@ -347,26 +347,28 @@ def main(args):
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser('Train a ProtoNet!')
-    parser.add_argument('--log_dir', type=str, default=None,
-                        help='directory to save to or load from')
-    parser.add_argument('--num_way', type=int, default=5,
-                        help='number of classes in a task')
-    parser.add_argument('--num_support', type=int, default=1,
-                        help='number of support examples per class in a task')
-    parser.add_argument('--num_query', type=int, default=15,
-                        help='number of query examples per class in a task')
-    parser.add_argument('--learning_rate', type=float, default=0.001,
-                        help='learning rate for the network')
-    parser.add_argument('--batch_size', type=int, default=96,
-                        help='number of tasks per outer-loop update')
-    parser.add_argument('--num_train_iterations', type=int, default=5000,
-                        help='number of outer-loop updates to train for')
-    parser.add_argument('--test', default=False, action='store_true',
-                        help='train or test')
-    parser.add_argument('--checkpoint_step', type=int, default=-1,
-                        help=('checkpoint iteration to load for resuming '
-                              'training, or for evaluation (-1 is ignored)'))
+    for K in [1, 2, 4, 6, 8, 10]:
+        parser = argparse.ArgumentParser('Train a ProtoNet!')
+        parser.add_argument('--log_dir', type=str,
+                            default='starter/logs/protonet/omniglot.way_5.support_1.query_15.lr_0.001.batch_size_96',
+                            help='directory to save to or load from')
+        parser.add_argument('--num_way', type=int, default=5,
+                            help='number of classes in a task')
+        parser.add_argument('--num_support', type=int, default=K,
+                            help='number of support examples per class in a task')
+        parser.add_argument('--num_query', type=int, default=10,
+                            help='number of query examples per class in a task')
+        parser.add_argument('--learning_rate', type=float, default=0.001,
+                            help='learning rate for the network')
+        parser.add_argument('--batch_size', type=int, default=96,
+                            help='number of tasks per outer-loop update')
+        parser.add_argument('--num_train_iterations', type=int, default=5000,
+                            help='number of outer-loop updates to train for')
+        parser.add_argument('--test', default=True, action='store_true',
+                            help='train or test')
+        parser.add_argument('--checkpoint_step', type=int, default=4900,
+                            help=('checkpoint iteration to load for resuming '
+                                  'training, or for evaluation (-1 is ignored)'))
 
-    main_args = parser.parse_args()
-    main(main_args)
+        main_args = parser.parse_args()
+        main(main_args)

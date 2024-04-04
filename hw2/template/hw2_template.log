@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.3.29)  4 APR 2024 17:42
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.3.29)  5 APR 2024 08:31
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -395,8 +395,14 @@ File: figures/4a.png Graphic file (type png)
 <use figures/4a.png>
 Package pdftex.def Info: figures/4a.png  used on input line 327.
 (pdftex.def)             Requested size: 469.75502pt x 331.29587pt.
- [14 <./figures/4a.png>] [15]
-Overfull \hbox (5.61757pt too wide) in paragraph at lines 356--358
+ [14 <./figures/4a.png>]
+<figures/5a.png, id=76, 307.1475pt x 244.66406pt>
+File: figures/5a.png Graphic file (type png)
+<use figures/5a.png>
+Package pdftex.def Info: figures/5a.png  used on input line 343.
+(pdftex.def)             Requested size: 469.75502pt x 374.21532pt.
+ [15 <./figures/5a.png>]
+Overfull \hbox (5.61757pt too wide) in paragraph at lines 359--361
 []\OT1/qpl/m/n/12 Use the pro-tonet trained with 5-way 1-shot tasks, and the MA
 ML trained with \OT1/qpl/b/n/12 learned
  []
@@ -417,10 +423,10 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 4638 strings out of 474104
- 69894 string characters out of 5747502
+ 4645 strings out of 474104
+ 70040 string characters out of 5747502
  1934496 words of memory out of 5000000
- 26940 multiletter control sequences out of 15000+600000
+ 26947 multiletter control sequences out of 15000+600000
  592464 words of font info for 68 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  57i,8n,65p,774b,464s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -438,10 +444,10 @@ exmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb><c:/texlive/2024/texmf-dist
 ts/type1/public/tex-gyre/qplb.pfb><c:/texlive/2024/texmf-dist/fonts/type1/publi
 c/tex-gyre/qplr.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/tex-gyre/qpl
 ri.pfb>
-Output written on hw2_template.pdf (17 pages, 702483 bytes).
+Output written on hw2_template.pdf (17 pages, 719916 bytes).
 PDF statistics:
- 152 PDF objects out of 1000 (max. 8388607)
+ 154 PDF objects out of 1000 (max. 8388607)
  89 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 31 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 36 words of extra memory for PDF output out of 10000 (max. 10000000)
 

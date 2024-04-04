@@ -481,32 +481,34 @@ def main(args):
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser('Train a MAML!')
-    parser.add_argument('--log_dir', type=str, default=None,
-                        help='directory to save to or load from')
-    parser.add_argument('--num_way', type=int, default=5,
-                        help='number of classes in a task')
-    parser.add_argument('--num_support', type=int, default=1,
-                        help='number of support examples per class in a task')
-    parser.add_argument('--num_query', type=int, default=15,
-                        help='number of query examples per class in a task')
-    parser.add_argument('--num_inner_steps', type=int, default=1,
-                        help='number of inner-loop updates')
-    parser.add_argument('--inner_lr', type=float, default=0.4,
-                        help='inner-loop learning rate initialization')
-    parser.add_argument('--learn_inner_lrs', default=True, action='store_true',
-                        help='whether to optimize inner-loop learning rates')
-    parser.add_argument('--outer_lr', type=float, default=0.001,
-                        help='outer-loop learning rate')
-    parser.add_argument('--batch_size', type=int, default=16,
-                        help='number of tasks per outer-loop update')
-    parser.add_argument('--num_train_iterations', type=int, default=15000,
-                        help='number of outer-loop updates to train for')
-    parser.add_argument('--test', default=False, action='store_true',
-                        help='train or test')
-    parser.add_argument('--checkpoint_step', type=int, default=-1,
-                        help=('checkpoint iteration to load for resuming '
-                              'training, or for evaluation (-1 is ignored)'))
+    for K in [1, 2, 4, 6, 8, 10]:
+        parser = argparse.ArgumentParser('Train a MAML!')
+        parser.add_argument('--log_dir', type=str,
+                            default='starter/logs/maml/omniglot.way_5.support_1.query_15.inner_steps_1.inner_lr_0.4.learn_inner_lrs_True.outer_lr_0.001.batch_size_16',
+                            help='directory to save to or load from')
+        parser.add_argument('--num_way', type=int, default=5,
+                            help='number of classes in a task')
+        parser.add_argument('--num_support', type=int, default=K,
+                            help='number of support examples per class in a task')
+        parser.add_argument('--num_query', type=int, default=10,
+                            help='number of query examples per class in a task')
+        parser.add_argument('--num_inner_steps', type=int, default=1,
+                            help='number of inner-loop updates')
+        parser.add_argument('--inner_lr', type=float, default=0.4,
+                            help='inner-loop learning rate initialization')
+        parser.add_argument('--learn_inner_lrs', default=True, action='store_true',
+                            help='whether to optimize inner-loop learning rates')
+        parser.add_argument('--outer_lr', type=float, default=0.001,
+                            help='outer-loop learning rate')
+        parser.add_argument('--batch_size', type=int, default=16,
+                            help='number of tasks per outer-loop update')
+        parser.add_argument('--num_train_iterations', type=int, default=15000,
+                            help='number of outer-loop updates to train for')
+        parser.add_argument('--test', default=True, action='store_true',
+                            help='train or test')
+        parser.add_argument('--checkpoint_step', type=int, default=14900,
+                            help=('checkpoint iteration to load for resuming '
+                                  'training, or for evaluation (-1 is ignored)'))
 
-    main_args = parser.parse_args()
-    main(main_args)
+        main_args = parser.parse_args()
+        main(main_args)
