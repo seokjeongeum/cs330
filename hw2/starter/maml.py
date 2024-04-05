@@ -366,8 +366,8 @@ class MAML:
         mean_95_confidence_interval = 1.96 * std / np.sqrt(NUM_TEST_TASKS)
         print(
             f'Accuracy over {NUM_TEST_TASKS} test tasks: '
-            f'mean {mean:.3f}, '
-            f'95% confidence interval {mean_95_confidence_interval:.3f}'
+            f'mean {mean}, '
+            f'95% confidence interval {mean_95_confidence_interval}'
         )
 
     def load(self, checkpoint_step):
@@ -484,7 +484,7 @@ if __name__ == '__main__':
     for K in [1, 2, 4, 6, 8, 10]:
         parser = argparse.ArgumentParser('Train a MAML!')
         parser.add_argument('--log_dir', type=str,
-                            default='starter/logs/maml/omniglot.way_5.support_1.query_15.inner_steps_1.inner_lr_0.4.learn_inner_lrs_True.outer_lr_0.001.batch_size_16',
+                            default='logs/maml/omniglot.way_5.support_1.query_15.inner_steps_1.inner_lr_0.4.learn_inner_lrs_True.outer_lr_0.001.batch_size_16',
                             help='directory to save to or load from')
         parser.add_argument('--num_way', type=int, default=5,
                             help='number of classes in a task')
