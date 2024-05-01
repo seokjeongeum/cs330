@@ -163,17 +163,16 @@ As a warmup, we will perform perhaps the most straightforward form of $k$-shot l
     python ft.py --task plot --model bert-tiny,bert-med --dataset amazon --k 1,8,128 --plot\_name Q0\_3.png
     }}
     
-    In one sentence, what do you notice about the performance of the two model scales?
-    
-    \textbf{\color{red}Include your plot and answer here.}
-
+    In one sentence, what do you notice about the performance of the two model scales?\\
+\includegraphics[width=\linewidth]{hw3_starter_code/starter_code/Q0_3.png}    
+    \textbf{\color{red}Performance gets better with the bigger model and more support examples.}
     \item (1 pt) If we fine-tune the all of our model parameters for each task, we must save a new complete copy of the model's parameters for each new task. As an example, a BERT-mini model similar to the ones you just fine-tuned has approximately 11.2 million parameters; assuming parameters are represented as 4-byte floats, after fine-tuning on a new task, how much disk space do we need to store the new fine-tuned model parameters?
 
-    \textbf{\color{red} Write your answer here.}
+    \textbf{\color{red}44,800,000 bytes or 42.7 megabytes.}
 
     \item (1 pt) Google's recent large language model \href{https://storage.googleapis.com/pathways-language-model/PaLM-paper.pdf}{PaLM} has 540 billion parameters. How much disk space would be needed to store a new fine-tuned version of this model, assuming parameters are represented as 4-byte floats?
 
-    \textbf{\color{red} Write your answer here.}
+    \textbf{\color{red}1.96 terabytes.}
 
 \end{enumerate}
 
@@ -230,8 +229,8 @@ Finally, these two approaches can be combined, for example adding the \texttt{Q:
     \texttt{\small python icl.py --task plot --model med,full --dataset babi --k 0,1,16 --plot\_name Q1\_2.png}
     
     What relationship(s) do you notice between model scale and few-shot performance?
-        
-    \textbf{\color{red}Include your plot and answer here.}
+\includegraphics[width=\linewidth]{hw3_starter_code/starter_code/Q1_2.png}            
+    \textbf{\color{red}The bigger model has robust few-shot performance.}
 
     \item (5 pt) Now let's evaluate several different prompt formats on the XSum dataset. With and without a task description in the prompt, evaluate zero-shot and few-shot performance for XSum on GPT-2-Medium with the command:
 

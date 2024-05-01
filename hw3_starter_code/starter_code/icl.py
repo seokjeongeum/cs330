@@ -1,19 +1,17 @@
-from cProfile import label
-from multiprocessing.sharedctypes import Value
-from typing import List
-import torch
-import matplotlib.pyplot as plt
-import matplotlib.ticker as mticker
-import transformers
-import numpy as np
-import random
-
 import argparse
-from collections import defaultdict
 import json
 import os
-from rouge_score import rouge_scorer
+import random
+from collections import defaultdict
+from typing import List
+
+import matplotlib.pyplot as plt
+import matplotlib.ticker as mticker
+import numpy as np
+import torch
 import tqdm
+import transformers
+from rouge_score import rouge_scorer
 
 try:
     import utils
@@ -32,7 +30,6 @@ parser.add_argument("--device", default="cuda")
 parser.add_argument("--plot_name", default="plot.png")
 args = parser.parse_args()
 
-
 if os.environ.get("FORCE_DEVICE", False):
     DEVICE = torch.device(os.environ["FORCE_DEVICE"])
 else:
@@ -42,10 +39,10 @@ print("In-context learning using device: ", DEVICE)
 
 
 def get_icl_prompts(
-    support_inputs: List[str],
-    support_labels: List[str],
-    test_input: str,
-    prompt_mode: str = "none",
+        support_inputs: List[str],
+        support_labels: List[str],
+        test_input: str,
+        prompt_mode: str = "none",
 ) -> str:
     """
     Take a list of contexts and combine them into k-shot prompts.
@@ -99,7 +96,39 @@ def get_icl_prompts(
     )  # Your code should use this ordering!
 
     ### START CODE HERE ###
-    assert False, "Complete this for Q1.1a"
+    if prompt_mode == "babi":
+        for i in permutation:
+            prompt += support_inputs[i]
+            prompt += " In the "
+            prompt += support_labels[i]
+            prompt += ". "
+        prompt += test_input
+        prompt += " In the"
+    elif prompt_mode == "none":
+        for i in permutation:
+            prompt += support_inputs[i]
+            prompt += " "
+            prompt += support_labels[i]
+            prompt += " "
+        prompt += test_input
+    elif prompt_mode == "tldr":
+        for i in permutation:
+            prompt += support_inputs[i]
+            prompt += " TL;DR: "
+            prompt += support_labels[i]
+            prompt += " "
+        prompt += test_input
+        prompt += " TL;DR:"
+    elif prompt_mode == "custom":
+        for i in permutation:
+            prompt += "Summarize: "
+            prompt += support_inputs[i]
+            prompt += " Output: "
+            prompt += support_labels[i]
+            prompt += " "
+        prompt += "Summarize: "
+        prompt += test_input
+        prompt += " Output:"
     ### END CODE HERE ###
 
     assert prompt[-1] != " "
@@ -107,7 +136,7 @@ def get_icl_prompts(
 
 
 def get_performance_metric(
-    predictions: List[str], targets: List[str], metric: str
+        predictions: List[str], targets: List[str], metric: str
 ) -> float:
     if metric == "rouge":
         scorer = rouge_scorer.RougeScorer(["rouge1"], use_stemmer=True)
@@ -146,10 +175,10 @@ def get_performance_metric(
 
 
 def do_sample(
-    model: transformers.GPT2LMHeadModel,
-    input_ids: torch.Tensor,
-    stop_tokens: List[int],
-    max_tokens: int,
+        model: transformers.GPT2LMHeadModel,
+        input_ids: torch.Tensor,
+        stop_tokens: List[int],
+        max_tokens: int,
 ) -> List[int]:
     """
     Sample from the model using the given input_ids as a prefix until we either
@@ -181,17 +210,26 @@ def do_sample(
     sampled_tokens = []
     # Complete this for Q1.1b
     ### START CODE HERE ###
-    assert False, "Complete this for Q1.1b"
+    with (torch.inference_mode()):
+        past_key_values = None
+        for _ in range(max_tokens):
+            f = model.forward(input_ids, past_key_values=past_key_values, use_cache=True)
+            input_ids = f.logits[:, -1].argmax().view(1, 1)
+            token = input_ids.item()
+            past_key_values = f.past_key_values
+            if token in stop_tokens:
+                break
+            sampled_tokens.append(token)
     ### END CODE HERE ###
     return sampled_tokens
 
 
 def run_icl(
-    models: List[str],
-    datasets_: List[str],
-    ks: List[int],
-    prompt_modes: List[str],
-    n_val: int = 125,
+        models: List[str],
+        datasets_: List[str],
+        ks: List[int],
+        prompt_modes: List[str],
+        n_val: int = 125,
 ):
     results = {}
     for model_name in models:
@@ -245,7 +283,10 @@ def run_icl(
                             #   my_tensor.to(DEVICE), where DEVICE is defined at lines 32-35.
                             decoded_prediction = ""
                             # YOUR CODE HERE, complete for Q1.1c. Should be ~5-10 lines of code.
-                            assert False, "Complete this for Q1.1c"
+                            prompt = get_icl_prompts(support_x, support_y, test_input, prompt_mode)
+                            my_tensor = tokenizer(prompt, return_tensors='pt').to(DEVICE)
+                            encoded_prediction = do_sample(model, my_tensor.input_ids, stop_tokens, max_tokens)
+                            decoded_prediction = tokenizer.decode(encoded_prediction)
                             # END YOUR CODE
 
                             predictions.append(decoded_prediction)

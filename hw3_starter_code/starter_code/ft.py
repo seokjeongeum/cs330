@@ -1,8 +1,9 @@
-from typing import List, Tuple, Iterable
 import argparse
+from typing import List, Tuple, Iterable
+
 import torch
-import transformers
 import torch.nn as nn
+import transformers
 
 try:
     import utils
@@ -35,7 +36,6 @@ parser.add_argument("--repeats", default=1, type=int)
 parser.add_argument("--device", default="cuda")
 parser.add_argument("--plot_name", default="plot.png")
 args = parser.parse_args()
-
 
 if os.environ.get("FORCE_DEVICE", False):
     DEVICE = torch.device(os.environ["FORCE_DEVICE"])
@@ -102,7 +102,7 @@ def parameters_to_fine_tune(model: nn.Module, mode: str) -> Iterable[nn.Paramete
     if mode == "all":
         # Every learnable parameter from `model` should be fine-tuned.
         # Complete this for Q0.1
-        assert False, "Complete this for Q0.1"
+        parameters_to_fine_tune = model.parameters()
     elif mode == "last":
         # Only fine tune the last 2 transformer blocks
         # Complete this for Q2.1
@@ -151,10 +151,11 @@ def get_loss(unnormalized_logits: torch.Tensor, targets: torch.Tensor) -> torch.
         elements (and sequence timesteps, if applicable)
     """
     loss: torch.Tensor = None
+    cross_entropy_loss = nn.CrossEntropyLoss()
     if unnormalized_logits.dim() == 2:
         # This is the classification case.
         # Complete this for Q0.1
-        assert False, "Complete this for Q0.1"
+        loss = cross_entropy_loss(unnormalized_logits, targets)
     elif unnormalized_logits.dim() == 3:
         # This is the generation case.
         # Remember that the target tensor may contain -100 values, which should be masked out
@@ -167,7 +168,7 @@ def get_loss(unnormalized_logits: torch.Tensor, targets: torch.Tensor) -> torch.
         )
 
     assert (
-        loss is not None and loss.dim() == 0
+            loss is not None and loss.dim() == 0
     ), "Loss should be a scalar tensor. It should be the mean loss over the batch"
     return loss
 
@@ -199,7 +200,9 @@ def get_acc(unnormalized_logits: torch.Tensor, targets: torch.Tensor) -> torch.T
     if unnormalized_logits.dim() == 2:
         # This is the classification case.
         # Complete this for Q0.1
-        assert False, "Complete this for Q0.1"
+        y = torch.argmax(unnormalized_logits, dim=-1) == targets
+        y = y.type(torch.float)
+        accuracy = torch.mean(y)
     elif unnormalized_logits.dim() == 3:
         # This is the generation case.
         # Complete this for Q2.2d
@@ -210,7 +213,7 @@ def get_acc(unnormalized_logits: torch.Tensor, targets: torch.Tensor) -> torch.T
         )
 
     assert (
-        accuracy is not None and accuracy.dim() == 0
+            accuracy is not None and accuracy.dim() == 0
     ), "Accuracy should be a scalar tensor. It should be the mean accuracy over the batch"
     return accuracy.item()
 
@@ -259,7 +262,7 @@ def ft_bert(model, tok, x, y, mode, batch_size=8):
 
 
 def tokenize_gpt2_batch(
-    tokenizer: transformers.GPT2Tokenizer, x: List[str], y: List[str]
+        tokenizer: transformers.GPT2Tokenizer, x: List[str], y: List[str]
 ):
     """
     Implement the tokenization step for a batch of examples for GPT-2.
@@ -319,7 +322,7 @@ def tokenize_gpt2_batch(
 
 
 def add_prefixes(
-    x: List[str], y: List[str], dataset: str
+        x: List[str], y: List[str], dataset: str
 ) -> Tuple[List[str], List[str]]:
     input_prefix = "" if utils.is_qa_dataset(dataset) else ""
     label_prefix = " In the" if utils.is_qa_dataset(dataset) else " TL;DR:"
@@ -356,7 +359,7 @@ def ft_gpt2(model, tok, x, y, mode, dataset, batch_size=8, grad_accum=8):
             idxs = list(range(len(x)))
             random.shuffle(idxs)
         batch_idxs = idxs[: batch_size // grad_accum]
-        idxs = idxs[batch_size // grad_accum :]
+        idxs = idxs[batch_size // grad_accum:]
 
         # Outline:
         # 1. Sample a random minibatch of examples of size batch_size // grad_accum using the batch_idxs variable
@@ -380,7 +383,7 @@ def ft_gpt2(model, tok, x, y, mode, dataset, batch_size=8, grad_accum=8):
                 model.eval()
                 accs = []
                 for idx in range(len(list(all_both.values())[0])):
-                    d = {k: v[idx : idx + 1] for k, v in all_both.items()}
+                    d = {k: v[idx: idx + 1] for k, v in all_both.items()}
                     acc = get_acc(model(**d).logits, d["labels"])
                     accs.append(acc)
                 total_acc = sum(accs) / len(accs)
@@ -407,11 +410,11 @@ def eval(model, tok, val_data):
 
 
 def run_ft(
-    models: List[str],
-    datasets: List[str],
-    ks: List[int],
-    modes: List[str],
-    n_val: int = 125,
+        models: List[str],
+        datasets: List[str],
+        ks: List[int],
+        modes: List[str],
+        n_val: int = 125,
 ):
     results = {}
     for dataset in datasets:
@@ -504,7 +507,7 @@ def run_ft(
                             f"Writing results to: {utils.RESULTS_DIR}/{question}/{k_}.json"
                         )
                         with open(
-                            f"{utils.RESULTS_DIR}/{question}/{k_}.json", "w"
+                                f"{utils.RESULTS_DIR}/{question}/{k_}.json", "w"
                         ) as f:
                             json.dump({"metric": v}, f)
                     results = {}
