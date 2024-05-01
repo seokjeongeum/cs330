@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.3.29)  1 MAY 2024 09:20
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.3.29)  1 MAY 2024 15:52
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -541,19 +541,48 @@ File: hw3_starter_code/starter_code/Q1_2.png Graphic file (type png)
 Package pdftex.def Info: hw3_starter_code/starter_code/Q1_2.png  used on input 
 line 232.
 (pdftex.def)             Requested size: 440.38033pt x 353.40848pt.
-[7] [8 <./hw3_starter_code/starter_code/Q1_2.png>] [9]
+[7]
+<hw3_starter_code/starter_code/Q1_3.png, id=84, 416.2752pt x 328.8285pt>
+File: hw3_starter_code/starter_code/Q1_3.png Graphic file (type png)
+<use hw3_starter_code/starter_code/Q1_3.png>
+Package pdftex.def Info: hw3_starter_code/starter_code/Q1_3.png  used on input 
+line 250.
+(pdftex.def)             Requested size: 440.38033pt x 347.88922pt.
+ [8 <./hw3_starter_code/starter_code/Q1_2.png>] [9 <./hw3_starter_code/starter_
+code/Q1_3.png>]
 Overfull \hbox (7.6132pt too wide) in paragraph at lines 275--276
 []\OT1/qpl/m/n/12 Implement batch con-struc-tion for fine-tuning GPT-2 in func-
-tion \OT1/cmtt/m/n/12 ft.py:tokenize[]
+tion \OT1/cmtt/b/n/12 ft.py:tokenize[]
  []
 
+[10]
+<hw3_starter_code/starter_code/Q2_3_xsum.png, id=116, 416.2752pt x 328.8285pt>
+File: hw3_starter_code/starter_code/Q2_3_xsum.png Graphic file (type png)
+<use hw3_starter_code/starter_code/Q2_3_xsum.png>
+Package pdftex.def Info: hw3_starter_code/starter_code/Q2_3_xsum.png  used on i
+nput line 291.
+(pdftex.def)             Requested size: 440.38033pt x 347.88922pt.
+<hw3_starter_code/starter_code/Q2_3_babi.png, id=117, 409.7709pt x 328.8285pt>
+File: hw3_starter_code/starter_code/Q2_3_babi.png Graphic file (type png)
+<use hw3_starter_code/starter_code/Q2_3_babi.png>
+Package pdftex.def Info: hw3_starter_code/starter_code/Q2_3_babi.png  used on i
+nput line 292.
+(pdftex.def)             Requested size: 440.38033pt x 353.40848pt.
+ [11 <./hw3_starter_code/starter_code/Q2_3_xsum.png>]
+<hw3_starter_code/starter_code/Q3_1.png, id=123, 462.528pt x 346.896pt>
+File: hw3_starter_code/starter_code/Q3_1.png Graphic file (type png)
+<use hw3_starter_code/starter_code/Q3_1.png>
+Package pdftex.def Info: hw3_starter_code/starter_code/Q3_1.png  used on input 
+line 306.
+(pdftex.def)             Requested size: 440.38033pt x 330.30095pt.
 
-Overfull \hbox (0.67444pt too wide) in paragraph at lines 303--304
+Overfull \hbox (0.67444pt too wide) in paragraph at lines 305--307
 []\OT1/qpl/m/n/12 When does in-context learn-ing seem like the bet-ter choice, 
 with re-spect to the amount
  []
 
-[10] [11] (./hw3_template.aux)
+[12 <./hw3_starter_code/starter_code/Q2_3_babi.png>] [13 <./hw3_starter_code/st
+arter_code/Q3_1.png>] (./hw3_template.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-03-14>
@@ -566,10 +595,10 @@ Package rerunfilecheck Info: File `hw3_template.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 12424 strings out of 474104
- 188790 string characters out of 5747502
+ 12454 strings out of 474104
+ 190130 string characters out of 5747502
  1938496 words of memory out of 5000000
- 34590 multiletter control sequences out of 15000+600000
+ 34618 multiletter control sequences out of 15000+600000
  604024 words of font info for 87 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  75i,8n,79p,975b,792s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -587,10 +616,10 @@ st/fonts/type1/public/amsfonts/symbols/msbm10.pfb><c:/texlive/2024/texmf-dist/f
 onts/type1/public/tex-gyre/qplb.pfb><c:/texlive/2024/texmf-dist/fonts/type1/pub
 lic/tex-gyre/qplbi.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/tex-gyre/
 qplr.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/tex-gyre/qplri.pfb>
-Output written on hw3_template.pdf (11 pages, 412240 bytes).
+Output written on hw3_template.pdf (13 pages, 541673 bytes).
 PDF statistics:
- 205 PDF objects out of 1000 (max. 8388607)
- 153 compressed objects within 2 object streams
- 45 named destinations out of 1000 (max. 500000)
- 11 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 222 PDF objects out of 1000 (max. 8388607)
+ 160 compressed objects within 2 object streams
+ 47 named destinations out of 1000 (max. 500000)
+ 31 words of extra memory for PDF output out of 10000 (max. 10000000)
 

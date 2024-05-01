@@ -246,9 +246,9 @@ Finally, these two approaches can be combined, for example adding the \texttt{Q:
     \texttt{\small python icl.py --task plot --model med,full --dataset xsum --k 0,1,4 \textbackslash \\
     \phantom{asdf}--prompt none,tldr,custom --plot\_name Q1\_3.png}
     
-    How does the performance of the \texttt{TL;DR:} prompt compare with no prompt formatting? What was your custom prompt format, and how did it compare with \texttt{TL;DR:}? Discuss the relative performance of the different prompts in the zero-shot, one-shot, and few-shot settings.
-    
-    \textbf{\color{red}Include your plot and answer here.}
+    How does the performance of the \texttt{TL;DR:} prompt compare with no prompt formatting? What was your custom prompt format, and how did it compare with \texttt{TL;DR:}? Discuss the relative performance of the different prompts in the zero-shot, one-shot, and few-shot settings.\\    
+\includegraphics[width=\linewidth]{hw3_starter_code/starter_code/Q1_3.png}            
+    \textbf{\color{red}\texttt{TL;DR:} prompt format performs the best among three.}
 
 \end{enumerate}
 
@@ -287,9 +287,11 @@ As we observed in question 1, fine-tuning the entire model can become extremely 
     \phantom{asdf}--dataset xsum --k 0,1,8,128 --plot\_name Q2\_3\_xsum.png}}
 
     {\small \texttt{python ft.py --task plot --model med --mode first,last,middle,lora4,lora16 \textbackslash \\
-    \phantom{asdf}--dataset babi --k 0,1,8,128 --plot\_name Q2\_3\_xsum.png}}
+    \phantom{asdf}--dataset babi --k 0,1,8,128 --plot\_name Q2\_3\_xsum.png}}\\    
+\includegraphics[width=\linewidth]{hw3_starter_code/starter_code/Q2_3_xsum.png}                
+\includegraphics[width=\linewidth]{hw3_starter_code/starter_code/Q2_3_babi.png}            
     
-    \textbf{\color{red}Include your plots and describe the results here.}
+    \textbf{\color{red}Fine tuning last parameters perform the worst among them.}
 
 \end{enumerate}
 
@@ -300,9 +302,10 @@ As we observed in question 1, fine-tuning the entire model can become extremely 
 
     {\small\texttt{python q3\_plot.py}}
 
-    When does in-context learning seem like the better choice, with respect to the amount of data available? What about fine-tuning? What limitation of in-context learning does this result highlight?
+    When does in-context learning seem like the better choice, with respect to the amount of data available? What about fine-tuning? What limitation of in-context learning does this result highlight?\\    
+\includegraphics[width=\linewidth]{hw3_starter_code/starter_code/Q3_1.png}               
     
-    \textbf{\color{red}Include your plot and write your answer here.}
+    \textbf{\color{red}In-context learning seems like a better choice when the amount of data available is low. Fine-tuning seems like a better choice when the amount of data available is high. In-context learning does not scale to the amount of data available.}
 
     \item (5 pt) One potential disadvantage of in-context learning is that we must choose an ordering for the examples in our prompt, and \textit{that ordering can sometimes impact performance negatively}. Run the command:
 
@@ -310,7 +313,7 @@ As we observed in question 1, fine-tuning the entire model can become extremely 
 
     to compute the evaluation performance of in-context few-shot performance for 5 random orderings of the prompt. Report the number you get; the standard deviation of performance for fine-tuning is approximately 0.013. Does in-context learning or fine-tuning have a higher standard deviation?
     
-    \textbf{\color{red}Write your answer here.}
+    \textbf{\color{red}Average: 0.6992. Standard deviation: 0.02161481. In-context learning has a higher standard deviation.}
 
     \textbf{(5 pt) Extra credit:} See \href{https://arxiv.org/pdf/2104.08786.pdf}{this paper} for multiple heuristics for picking a prompt ordering. Implement either the globalE or localE heuristic, and report the accuracy you find for that ordering for 16-shot bAbI on GPT-2-medium. Compare it with the accuracy you found with random prompt orderings in question 1.
     

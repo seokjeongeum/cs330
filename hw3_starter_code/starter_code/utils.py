@@ -1,14 +1,14 @@
-from typing import List, Optional
-from collections import defaultdict
-import datasets
-import transformers
 import logging
-import random
-import numpy as np
 import os
-import torch
+import random
+from collections import defaultdict
+from typing import List, Optional
 
+import datasets
 import matplotlib
+import numpy as np
+import torch
+import transformers
 
 logging.basicConfig()
 LOG = logging.getLogger(__name__)
@@ -63,7 +63,7 @@ def dataset2hfname(dataset: str) -> str:
 def get_dataset(dataset: str, n_train: int, n_val: int = 100):
     if dataset == "cnn":
         n_train = 64
-        d = datasets.load_dataset("cnn_dailymail", "3.0.0", split="train")
+        d = datasets.load_dataset("cnn_dailymail", "3.0.0", split="train", trust_remote_code=True)
         filter_fn = lambda rows: [
             "VIDEO" not in a
             and len(a.split(" ")) < 110
@@ -86,10 +86,10 @@ def get_dataset(dataset: str, n_train: int, n_val: int = 100):
 
         d = d.map(strip_target)
         d = d.add_column("simple_y", d["y"])
-        return d[:n_train], d[n_train : n_train + n_val]
+        return d[:n_train], d[n_train: n_train + n_val]
     elif dataset == "trivia":
         n_train = 256
-        d = datasets.load_dataset("trivia_qa", "rc.nocontext", split="train[:1%]")
+        d = datasets.load_dataset("trivia_qa", "rc.nocontext", split="train[:1%]", trust_remote_code=True)
         targets = [
             [a["normalized_value"]] + a["normalized_aliases"] for a in d["answer"]
         ]
@@ -98,12 +98,12 @@ def get_dataset(dataset: str, n_train: int, n_val: int = 100):
         d = d.rename_column("question", "x")
         offset = 0
         return (
-            d[offset : offset + n_train],
-            d[offset + n_train : offset + n_train + n_val],
+            d[offset: offset + n_train],
+            d[offset + n_train: offset + n_train + n_val],
         )
     elif dataset == "babi":
         n_train = 256
-        d = datasets.load_dataset("babi_qa", "en-valid-10k-qa1", split="train")
+        d = datasets.load_dataset("babi_qa", "en-valid-10k-qa1", split="train", trust_remote_code=True)
         answer_idxs = []
         for story in d["story"]:
             for idx, answer in enumerate(story["answer"]):
@@ -122,14 +122,14 @@ def get_dataset(dataset: str, n_train: int, n_val: int = 100):
         stories = [stories[idx] for idx in perm]
         data = {"x": stories, "y": answers, "simple_y": answers}
         d = datasets.Dataset.from_dict(data)
-        return d[:n_train], d[n_train : n_train + n_val]
+        return d[:n_train], d[n_train: n_train + n_val]
     elif dataset == "amazon":
         # d = datasets.load_dataset("amazon_us_reviews", "Video_v1_00")["train"]
         data_files = "data/amazon_reviews_us_Video_v1_00.csv"
         if not os.path.exists(data_files):
             data_files = "starter_code/data/amazon_reviews_us_Video_v1_00.csv"
         try:
-            d = datasets.load_dataset("csv", data_files=data_files)["train"]
+            d = datasets.load_dataset("csv", data_files=data_files, trust_remote_code=True)["train"]
         except FileNotFoundError:
             print(
                 "PLEASE DOWNLOAD THE AMAZON DATASET FROM https://drive.google.com/file/d/1RLCPCEvJVTvUbn-D426Avwg6hynSBgU3/view?usp=sharing AND PLACE IT IN data/amazon_reviews_us_Video_v1_00.csv"
@@ -155,7 +155,7 @@ def get_dataset(dataset: str, n_train: int, n_val: int = 100):
         return train, val
     elif dataset == "xsum":
         n_train = 256
-        d = datasets.load_dataset("xsum", split="train")
+        d = datasets.load_dataset("xsum", split="train", trust_remote_code=True)
         filter_fn = lambda rows: [
             len(a.split(" ")) + len(s.split(" ")) < 100
             for a, s in zip(rows["document"], rows["summary"])
@@ -163,7 +163,7 @@ def get_dataset(dataset: str, n_train: int, n_val: int = 100):
         d = d.filter(filter_fn, batched=True, batch_size=None)
         d = d.rename_columns({"document": "x", "summary": "y"})
         d = d.add_column("simple_y", d["y"])
-        return d[:n_train], d[n_train : n_train + n_val]
+        return d[:n_train], d[n_train: n_train + n_val]
     else:
         raise NotImplementedError(f"{dataset}")
 

@@ -4,6 +4,7 @@ from typing import List, Tuple, Iterable
 import torch
 import torch.nn as nn
 import transformers
+from torch.nn.functional import cross_entropy
 
 try:
     import utils
@@ -64,7 +65,9 @@ class LoRALayerWrapper(nn.Module):
         ###
         self.lora_A, self.lora_B = None, None
         ## YOUR CODE HERE, complete for Q2.2b
-        assert False, "Complete this for Q2.2b"
+        shape = base_module.weight.shape
+        self.lora_A = nn.Parameter(torch.randn((shape[0], lora_rank)))
+        self.lora_B = nn.Parameter(torch.zeros((shape[1], lora_rank)))
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         base_out = self.base_module(x)  # The output of the pre-trained module.
@@ -74,8 +77,7 @@ class LoRALayerWrapper(nn.Module):
         ###
 
         ## YOUR CODE HERE, complete for Q2.2b
-        assert False, "Complete this for Q2.2b"
-        pass
+        return base_out + x @ self.lora_A @ self.lora_B.T
 
 
 def parameters_to_fine_tune(model: nn.Module, mode: str) -> Iterable[nn.Parameter]:
@@ -102,25 +104,27 @@ def parameters_to_fine_tune(model: nn.Module, mode: str) -> Iterable[nn.Paramete
     if mode == "all":
         # Every learnable parameter from `model` should be fine-tuned.
         # Complete this for Q0.1
-        parameters_to_fine_tune = model.parameters()
+        parameters_to_fine_tune = [parameter for parameter in model.parameters()]
     elif mode == "last":
         # Only fine tune the last 2 transformer blocks
         # Complete this for Q2.1
-        assert False, "Complete this for Q2.1"
+        parameters_to_fine_tune = [parameter for parameter in model.transformer.h[-2:].parameters()]
     elif mode == "first":
         # Only fine tune the first 2 transformer blocks
         # Complete this for Q2.1
-        assert False, "Complete this for Q2.1"
+        parameters_to_fine_tune = [parameter for parameter in model.transformer.h[:2].parameters()]
     elif mode == "middle":
         # Only fine tune middle 2 transformer blocks
         # Complete this for Q2.1
-        assert False, "Complete this for Q2.1"
+        n = len(model.transformer.h) // 2
+        parameters_to_fine_tune = [parameter for parameter in model.transformer.h[n - 1: n + 1].parameters()]
     elif mode.startswith("lora"):
         # Only fine tune the rank decomposition matrices A and B from the LoRA layers.
         # Hint: consider using the `.modules()` function of nn.Module and checking for modules that
         # are an instance of LoRALayerWrapper.
         # Complete this for Q2.2c
-        assert False, "Complete this for Q2.2c"
+        parameters_to_fine_tune = [lora for module in model.modules() if isinstance(module, LoRALayerWrapper) for lora
+                                   in [module.lora_A, module.lora_B]]
     else:
         raise ValueError(f"Unrecognized fine-tuning mode {mode}")
 
@@ -151,17 +155,22 @@ def get_loss(unnormalized_logits: torch.Tensor, targets: torch.Tensor) -> torch.
         elements (and sequence timesteps, if applicable)
     """
     loss: torch.Tensor = None
-    cross_entropy_loss = nn.CrossEntropyLoss()
     if unnormalized_logits.dim() == 2:
         # This is the classification case.
         # Complete this for Q0.1
-        loss = cross_entropy_loss(unnormalized_logits, targets)
+        loss = cross_entropy(unnormalized_logits, targets)
     elif unnormalized_logits.dim() == 3:
         # This is the generation case.
         # Remember that the target tensor may contain -100 values, which should be masked out
         # and that an off-by-one shift is needed between the logits and targets.
         # Complete this for Q2.2d
-        assert False, "Complete this for Q2.2d"
+        loss = cross_entropy(
+            torch.cat([
+                torch.zeros((1, unnormalized_logits.shape[2]), device=DEVICE),
+                unnormalized_logits.view(unnormalized_logits.shape[1], -1)[:-1],
+            ]),
+            targets.view(-1)
+        )
     else:
         raise ValueError(
             f"Logits should either be 2-dim (for classification) or 3-dim (for generation); got {unnormalized_logits.dim()}"
@@ -206,7 +215,19 @@ def get_acc(unnormalized_logits: torch.Tensor, targets: torch.Tensor) -> torch.T
     elif unnormalized_logits.dim() == 3:
         # This is the generation case.
         # Complete this for Q2.2d
-        assert False, "Complete this for Q2.2d"
+        y = torch.argmax(
+            torch.cat(
+                [
+                    torch.zeros((1, 1, unnormalized_logits.shape[2]), device=DEVICE),
+                    unnormalized_logits[:, :-1],
+                ],
+                dim=1,
+            ),
+            dim=-1,
+        ) == targets
+        y = y[targets != -100]
+        y = y.type(torch.float)
+        accuracy = torch.mean(y)
     else:
         raise ValueError(
             f"Logits should either be 2-dim (for classification) or 3-dim (for generation); got {unnormalized_logits.dim()}"
@@ -317,7 +338,15 @@ def tokenize_gpt2_batch(
     """
     combined_sequences = None
     # YOUR CODE HERE, complete for Q2.2e
-    assert False, "Complete for Q2.2e"
+    tokenizer_dict = tokenizer([x_ + y_ for x_, y_ in zip(x, y)], return_tensors='pt', padding=True).to(DEVICE)
+    labels = copy.deepcopy(tokenizer_dict['input_ids'])
+    lx = [len(_) for _ in tokenizer(x)['input_ids']]
+    ly = [len(_) for _ in tokenizer(y)['input_ids']]
+    for i in range(len(x)):
+        labels[i][:lx[i]] = -100
+        labels[i][lx[i] + ly[i]:] = -100
+    combined_sequences = tokenizer_dict
+    combined_sequences['labels'] = labels
     return combined_sequences
 
 
@@ -373,9 +402,19 @@ def ft_gpt2(model, tok, x, y, mode, dataset, batch_size=8, grad_accum=8):
         # 5. Take a step of the optimizer and zero the model gradients ***only every grad_accum steps***
         #    Be careful that you don't take a step after the very first backward pass (i.e., when step == 0)
         # Note: the ** operator will unpack a dictionary into keyword arguments to a function (such as your model)
-
         # YOUR CODE HERE, complete for Q2.2f
-        assert False, "Complete for Q2.2f"
+        x_ = [x[i] for i in batch_idxs]
+        y_ = [y[i] for i in batch_idxs]
+
+        t = tokenize_gpt2_batch(tok, x_, y_)
+
+        loss = get_loss(model(**t, use_cache=False).logits, t["labels"]) / grad_accum
+
+        loss.backward()
+
+        if step != 0 and step % grad_accum == 0:
+            optimizer.step()
+            optimizer.zero_grad()
         # END YOUR CODE
 
         if step % (grad_accum * 5) == 0:
