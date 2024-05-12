@@ -75,7 +75,7 @@ Due Monday, November 14th, 11:59 PM PT}
 
 \begin{tabular}{rl}
 SUNet ID: &  \\
-Name: & \\
+Name: & Seok, Jeongeum\\
 Collaborators: & 
 \end{tabular}
 \end{center}
@@ -118,7 +118,8 @@ Let $p(w)$ be a distribution over $\mathbb{R}^n$.
 Each task is constructed by sampling $w \sim p(w)$ and then using $x \mapsto \sum_i w_i \phi_i(x)$ as the ground-truth function, where the inputs $x$ are sampled from $\textrm{Unif}([0, 1])$.
 (2 points)
 
-\textcolor{red}{Your two-part answer goes here.}
+\textcolor{red}{Complete memorization can occur because algorithm can memorize all the datapoints.\\
+The performance on the meta-test set would be as good as meta-train because basis functions are learnable.}
 
 \item \textbf{Medical image classification.}
 Consider a meta-learning dataset for medical imaging, where the goal is for a model to be able to recognize a novel disease given a small number of labeled cases.
@@ -129,7 +130,8 @@ To construct a meta-training task, we randomly sample one of the $N$ diseases, t
 Meta-testing tasks are constructed similarly from images corresponding to a set of $M$ held-out diseases.
 (2 points)
 
-\textcolor{red}{Your two-part answer goes here.}
+\textcolor{red}{Complete memorization cannot occur because the algorithm cannot achieve perfect performance for medical images while ignoring the support set.\\
+The performance on the meta-test set would be as good as meta-train because medical images would share the similar distribution.}
 
 \item \textbf{Robotic grasping.}
 Consider a simplified robotic grasping task, where the goal is to predict the three-dimensional coordinates ($\in \mathbb{R}^3$) of a target object to grasp.
@@ -142,7 +144,8 @@ During each attempt, the robot makes object coordinate predictions and receives 
 At meta-test time, we test the robot on novel objects with the monitor turned off, and measure the average grasping success rate after the initial $5$ trials.
 (2 points)
 
-\textcolor{red}{Your two-part answer goes here.}
+\textcolor{red}{Complete memorization cannot occur because the algorithm cannot achieve perfect performance for images while ignoring the support set.\\
+The performance on the meta-test set would be as good as meta-train because grasping a speicific object would share the similar distribution.}
 
 \end{enumerate}
 
@@ -162,9 +165,6 @@ Draw a plate notation diagram for this model.
 Your diagram should include all variables $z_1, z_2, x, y, m$ with node colors reflecting whether each node is hidden or observable, and a plate representing the $N$ examples inside each dataset.
 You can hand-draw a diagram or modify the provided \texttt{tikz} diagram for Neural Processes (Figure \ref{fig:plate_np}).
 (2 points)
-
-\textcolor{red}{Your answer goes here.}
-
 \begin{figure}
 \centering
 \tikz{
@@ -174,12 +174,16 @@ You can hand-draw a diagram or modify the provided \texttt{tikz} diagram for Neu
 % Nodes. Syntax: [options] (name) {text};
  \node[obs] (x) {$x$};%
  \node[obs,left=of x] (y) {$y$}; %
- \node[latent,above=of y,xshift=0cm] (z) {$z$}; %
+ \node[latent,below=of y] (z_{1}) {$z_{1}$}; %
+ \node[latent,below=of x] (z_{2}) {$z_{2}$}; %
+ \node[obs,right=of z_{2}] (m) {$m$}; %
 % Edges. Syntax: {out_node} {in_node};
- \edge {x} {y}; %
- \edge {z} {y}; %
+ \edge {x} {z_{1}}; %
+ \edge {y} {z_{1}}; %
+ \edge {z_{1}} {z_{2}}; %
+ \edge {m} {z_{2}}; %
 % Plates. Syntax: [options] {name} {(nodes)(to)(include)} {text};
- \plate [inner sep=.25cm,yshift=.1cm] {} {(x)(y)} {$N$}; %
+ \plate  {} {(x)(y)} {$N$}; %
 }
 \caption{ \label{fig:plate_np}
 Plate notation diagram of Neural Processes.}
@@ -200,12 +204,12 @@ Your derivation can use standard lemmas such as Jensen's inequality without proo
 \log p(y_{1:N} | x_{1:N}, m)
 = \textcolor{red}{\cdots}
 \geq \mathbb{E}_{
-\textcolor{red}{\cdots}
+q(z|x_{1:N},y_{1:N})
 }
 \left[ 
-\textcolor{red}{\cdots}
+\sum_{i=1}^{N}\log p(y_{i}|z,x_{i})
 \right] 
--\kld{\textcolor{red}{\cdots}}{\textcolor{red}{\cdots}}.
+-\kld{q(z|x,y)}{p(z)}.
 \end{align}
 \end{enumerate}
 
