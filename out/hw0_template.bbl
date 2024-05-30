@@ -1,0 +1,19 @@
+\begin{thebibliography}{1}
+
+\bibitem{Yehuda2009matrix}
+Koren Yehuda, Robert Bell, and Chris Volinsky.
+\newblock Matrix factorization techniques for recommender systems.
+\newblock {\em Computer}, 42, 2009.
+
+\bibitem{he2017neural}
+Xiangnan He, Lizi Liao, Hanwang Zhang, Liqiang Nie, Xia Hu, and Tat-Seng Chua.
+\newblock Neural collaborative filtering.
+\newblock In {\em Proceedings of the 26th international conference on world
+  wide web}, pages 173--182, 2017.
+
+\bibitem{Rendle2009BPR}
+Steffen Rendle, Christoph Freudenthaler, Zeno Gantner, and Lars Schmidt-Thieme.
+\newblock Bpr: Bayesian personalized ranking from implicit feedback.
+\newblock {\em Conference on Uncertainty in Artificial Intelligence}, 2009.
+
+\end{thebibliography}

@@ -1,6 +1,7 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.3.29)  30 MAY 2024 14:42
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.3.29)  30 MAY 2024 14:47
 entering extended mode
  restricted \write18 enabled.
+ file:line:error style messages enabled.
  %&-line parsing enabled.
 **hw0_template.tex
 (./hw0_template.tex
@@ -325,7 +326,7 @@ File: l3backend-pdftex.def 2024-03-14 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count288
 \l__pdf_internal_box=\box54
 )
-(./hw0_template.aux)
+(C:/Users/seokj/PycharmProjects/cs330/out/hw0_template.aux)
 \openout1 = `hw0_template.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 19.
@@ -371,7 +372,8 @@ e
 ))
 Package hyperref Info: Link coloring ON on input line 19.
 
-(./hw0_template.out) (./hw0_template.out)
+(C:/Users/seokj/PycharmProjects/cs330/out/hw0_template.out)
+(C:/Users/seokj/PycharmProjects/cs330/out/hw0_template.out)
 \@outlinefile=\write3
 \openout3 = `hw0_template.out'.
 
@@ -387,31 +389,17 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 26.
 (c:/texlive/2024/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-
-LaTeX Warning: Citation `Yehuda2009matrix' on page 1 undefined on input line 39
-.
-
-
-LaTeX Warning: Citation `he2017neural' on page 1 undefined on input line 39.
-
 LaTeX Font Info:    Trying to load font information for TS1+qpl on input line 5
-6.
+5.
+
 (c:/texlive/2024/texmf-dist/tex/latex/tex-gyre/ts1qpl.fd
 File: ts1qpl.fd 2009/09/25 v1.2 font definition file for TS1/qpl
 ) [1
 
 {c:/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{c:/texlive/2024/
 texmf-dist/fonts/enc/dvips/tex-gyre/q-rm.enc}{c:/texlive/2024/texmf-dist/fonts/
-enc/dvips/tex-gyre/q-ts1.enc}]
-
-LaTeX Warning: Citation `Yehuda2009matrix' on page 2 undefined on input line 11
-8.
-
-
-LaTeX Warning: Citation `Rendle2009BPR' on page 2 undefined on input line 135.
-
-[2]
-Overfull \hbox (0.15108pt too wide) in paragraph at lines 161--162
+enc/dvips/tex-gyre/q-ts1.enc}] [2]
+Overfull \hbox (0.15108pt too wide) in paragraph at lines 160--161
 []\OT1/qpl/m/n/12 Consider the ma-trix $\OT1/cmr/bx/n/12 U \OT1/cmr/m/n/12 = [\
 OT1/cmr/bx/n/12 u[]\OMS/cmsy/m/n/12 j\OML/cmm/m/it/12 ; [] ; \OMS/cmsy/m/n/12 j
 \OT1/cmr/bx/n/12 u[]\OT1/cmr/m/n/12 ] \OMS/cmsy/m/n/12 2 \U/msb/m/n/12 R[]$\OT1
@@ -421,39 +409,34 @@ cmr/m/n/12 ] \OMS/cmsy/m/n/12 2 \U/msb/m/n/12 R[]$\OT1/qpl/m/n/12 ,
  []
 
 [3]
-Overfull \hbox (1.85265pt too wide) in paragraph at lines 192--193
+Overfull \hbox (1.85265pt too wide) in paragraph at lines 190--191
 []\OT1/qpl/m/n/12 Here the \OT1/cmtt/m/n/12 --factorization[]weight \OT1/qpl/m/
 n/12 and \OT1/cmtt/m/n/12 --regression[]weight \OT1/qpl/m/n/12 ar-gu-ments cor-
 re-spond
  []
 
-<.png, id=67, 1340.75906pt x 814.54312pt>
+<.png, id=74, 1340.75906pt x 814.54312pt>
 File: .png Graphic file (type png)
 <use .png>
-Package pdftex.def Info: .png  used on input line 209.
+Package pdftex.def Info: .png  used on input line 207.
 (pdftex.def)             Requested size: 469.75502pt x 285.38022pt.
-[4] [5 <./.png>]
-No file hw0_template.bbl.
-(./hw0_template.aux)
+[4] [5 <./.png>] (C:/Users/seokj/PycharmProjects/cs330/out/hw0_template.bbl)
+[6] (C:/Users/seokj/PycharmProjects/cs330/out/hw0_template.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-03-14>
  ***********
-
-
-LaTeX Warning: There were undefined references.
-
 Package rerunfilecheck Info: File `hw0_template.out' has not changed.
 (rerunfilecheck)             Checksum: 32922F8D0AF1A0FD3830B4CF47950C04;408.
  ) 
 Here is how much of TeX's memory you used:
- 10640 strings out of 474104
- 160867 string characters out of 5747502
+ 10655 strings out of 474104
+ 161650 string characters out of 5747502
  1939496 words of memory out of 5000000
- 32841 multiletter control sequences out of 15000+600000
+ 32847 multiletter control sequences out of 15000+600000
  587510 words of font info for 69 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,16n,79p,934b,446s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,16n,79p,937b,446s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/tex
 live/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2024
 /texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2024/texmf-di
@@ -467,10 +450,11 @@ xlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb><c:/texlive/202
 xmf-dist/fonts/type1/public/tex-gyre/qplb.pfb><c:/texlive/2024/texmf-dist/fonts
 /type1/public/tex-gyre/qplr.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/
 tex-gyre/qplri.pfb>
-Output written on hw0_template.pdf (5 pages, 406815 bytes).
+Output written on C:/Users/seokj/PycharmProjects/cs330/out/hw0_template.pdf (6 
+pages, 412934 bytes).
 PDF statistics:
- 160 PDF objects out of 1000 (max. 8388607)
- 120 compressed objects within 2 object streams
- 31 named destinations out of 1000 (max. 500000)
+ 172 PDF objects out of 1000 (max. 8388607)
+ 131 compressed objects within 2 object streams
+ 36 named destinations out of 1000 (max. 500000)
  38 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -1,0 +1,22 @@
+\begin{thebibliography}{1}
+
+\bibitem{pmlr-v48-santoro16}
+Adam Santoro, Sergey Bartunov, Matthew Botvinick, Daan Wierstra, and Timothy
+  Lillicrap.
+\newblock Meta-learning with memory-augmented neural networks.
+\newblock In Maria~Florina Balcan and Kilian~Q. Weinberger, editors, {\em
+  Proceedings of The 33rd International Conference on Machine Learning},
+  volume~48 of {\em Proceedings of Machine Learning Research}, pages
+  1842--1850, New York, New York, USA, 20--22 Jun 2016. PMLR.
+
+\bibitem{Lake1332}
+Brenden~M. Lake, Ruslan Salakhutdinov, and Joshua~B. Tenenbaum.
+\newblock Human-level concept learning through probabilistic program induction.
+\newblock {\em Science}, 350(6266):1332--1338, 2015.
+
+\bibitem{DBLP:journals/corr/MishraRCA17}
+Nikhil Mishra, Mostafa Rohaninejad, Xi~Chen, and Pieter Abbeel.
+\newblock Meta-learning with temporal convolutions.
+\newblock {\em CoRR}, abs/1707.03141, 2017.
+
+\end{thebibliography}
