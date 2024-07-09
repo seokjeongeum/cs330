@@ -31,4 +31,4 @@ torchaudio==0.13.1
 typing-extensions==4.3.0
 urllib3==1.26.19
 Werkzeug==3.0.3
-zipp==3.8.1
+zipp==3.19.1
