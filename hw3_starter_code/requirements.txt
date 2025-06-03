@@ -55,7 +55,7 @@ six==1.16.0
 stack-data==0.5.1
 tokenizers
 toml==0.10.2
-torch==2.2.0
+torch==2.7.0
 torchvision==0.14.1+cu117
 torchaudio==0.13.1
 tqdm==4.66.3
