@@ -15,7 +15,7 @@ MarkupSafe==2.1.1
 numpy==1.23.3
 oauthlib==3.2.2
 Pillow==10.3.0
-protobuf==3.19.5
+protobuf==4.25.8
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
 requests==2.32.4
