@@ -29,6 +29,6 @@ torch==2.7.1
 torchvision==0.14.1+cu117
 torchaudio==0.13.1
 typing-extensions==4.3.0
-urllib3==1.26.19
+urllib3==2.5.0
 Werkzeug==3.0.6
 zipp==3.19.1
