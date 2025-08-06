@@ -55,12 +55,12 @@ six==1.16.0
 stack-data==0.5.1
 tokenizers
 toml==0.10.2
-torch==2.7.1
+torch==2.8.0
 torchvision==0.14.1+cu117
 torchaudio==0.13.1
 tqdm==4.66.3
 traitlets==5.4.0
-transformers==4.52.1
+transformers==4.53.0
 typing-extensions==4.4.0
 urllib3>=1.26.19
 wcwidth==0.2.5
